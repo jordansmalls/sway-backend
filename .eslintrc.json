@@ -1,0 +1,9 @@
+{
+  "env": {
+    "node": true,
+    "es2020": true
+  },
+  "rules": {
+    "no-console": "warn"
+  }
+}

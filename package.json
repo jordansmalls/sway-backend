@@ -1,0 +1,48 @@
+{
+  "name": "sway-backend",
+  "version": "1.0.0",
+  "description": "Sway is an application that allows party-goers to request songs at events, making it easier for DJs to manage and play music requests. Users can join a room via a unique code and submit their song requests anonymously or with their name, while DJs can manage and prioritize requests in real-time. The app leverages the Spotify API to allow users to search and select songs from Spotify's vast catalog, streamlining the song request process for both attendees and DJs.",
+  "main": "server.ts",
+  "scripts": {
+    "dev": "nodemon --ext ts --exec ts-node server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "keywords": [
+  "sway",
+  "song request",
+  "music",
+  "DJ",
+  "event",
+  "real-time",
+  "Spotify API",
+  "Spotify",
+  "Drake",
+  "Kendrick Lamar",
+  "live requests",
+  "party",
+  "music streaming",
+  "event management",
+  "collaboration",
+  "socket.io",
+  "web app",
+  "backend"
+  ],
+  "author": "Jordan Smalls - jsmalls.dev",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.5",
+    "eslint": "^9.21.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
