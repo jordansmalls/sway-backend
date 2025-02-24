@@ -6,7 +6,7 @@ import generateToken from '../utils/generateToken';
 
 
 // @desc    Auth user & get token (email)
-// @route   POST /api/users/auth
+// @route   POST /api/users/login
 // @access  Public
 
 const authUser = asyncHandler(async (req: Request, res: Response) => {
@@ -28,7 +28,7 @@ const authUser = asyncHandler(async (req: Request, res: Response) => {
 });
 
 // @desc    Auth user & get token (username)
-// @route   POST /api/users/auth/username
+// @route   POST /api/users/login/username
 // @access  Public
 
 const authUserUsername = asyncHandler(async (req: Request, res: Response) => {
@@ -52,12 +52,13 @@ const authUserUsername = asyncHandler(async (req: Request, res: Response) => {
 
 
 // @desc    Register a new user
-// @route   POST /api/users
+// @route   POST /api/users/register
 // @access  Public
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
   const userExists = await User.findOne({ email });
+  console.log('registerUser: User exists check', userExists);
 
   if (userExists) {
     throwError(400, "User already exists.");
@@ -68,6 +69,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     email,
     password,
   });
+  console.log('registerUser: User created', user);
 
   if (user) {
     generateToken(res, user._id.toString());
@@ -83,15 +85,17 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 });
 
 // @desc    Update/Create Username
-// @route   PUT /api/users/username
+// @route   PUT /api/users/profile/username
 // @access  Private
 const updateUsername = asyncHandler(async (req: Request, res: Response) => {
+  console.log('updateUsername: Request received', req.body);
   if (!req.user) {
     throwError(401, 'Not authorized.');
     return;
   }
 
   const user: IUser | null = await User.findById(req.user._id.toString());
+  console.log('updateUsername: User found', user);
   if (!user) {
     throwError(404, 'User not found.');
     return;
@@ -167,6 +171,8 @@ const logoutUser = (req: Request, res: Response) => {
 // @route   GET /api/users/profile
 // @access  Private
 const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
+  console.log('getUserProfile: Request received');
+  console.log('getUserProfile: req.user:', req.user); // Log req.user
   if(!req.user) {
     throwError(401, "Not authorized.");
     return;
@@ -174,7 +180,7 @@ const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
 
   const user = await User.findById(req.user._id.toString());
   // const user = await User.findById((req.user as IUser)._id.toString());
-
+  console.log('getUserProfile: User found:', user); // Log the user
 
   if (user) {
     res.json({
@@ -183,6 +189,7 @@ const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
       email: user.email,
       username: user.username,
     });
+     console.log('getUserProfile: Response sent');
   } else {
     throwError(404, "User not found.");
   }
