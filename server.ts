@@ -10,6 +10,8 @@ app.use(express.json());
 
 const PORT: number = parseInt(process.env.PORT || "8080", 10)
 
+import "./types/express";
+
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Server is running.")
